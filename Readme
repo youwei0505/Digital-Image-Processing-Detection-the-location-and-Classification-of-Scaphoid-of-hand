@@ -1,0 +1,63 @@
+# Digital Image Processing 
+Final Project
+P76104231 蔣有為
+Problem :  
+Problem A : Detection the location and Classification of Scaphoid of hand from X-ray Image.
+Problem B : Classify if the Scaphoid of Image was fracture or not and Detection the location of the Scaphoid.
+Method :  
+Environment requirement :  Python >= 3.7.9, including PyTorch>=1.9
+使用了yolov5進行模型訓練。Shortly after the release of YOLOv4 Glenn Jocher introduced YOLOv5 using the Pytorch framework.
+The open source code is available on GitHub  
+Models :
+ 
+Dataset:
+Source X-ray images
+| Normal   ---- 120 images
+| Fracture ---- 120 images
+After split (8:2)	|
+	|--- 1 set (0~33%)
+		| Train (66%) 
+	| Normal   --- 80 images 
+| Fracture --- 80 images 
+		| Test  (33%)
+	| Normal   --- 40 images (00169382 L 51F AP0 (1)~ 08838278-OB30 (40))
+| Fracture --- 40 images (00075616-AP0(1) ~ 08092913-SC0(40))
+	| --- 2 set (33~66%)
+| Train (66%) 
+		| Test  (33%)
+	| Normal   --- 40 images (08838278-SC0 (41) ~ 18059482-AP0 (80))
+| Fracture --- 40 images (08187768-SC20 (41) ~ 18345938-SC20 (80))
+| --- 3 set (33~66%)
+| Train (66%) 
+| Test  (33%)
+	| Normal   --- 40 images (18060182-OB0 (81) ~ 182504260 L 28F AP0 (120))
+| Fracture --- 40 images (18389767-OB0 (81) ~ 20153305-AP0 (120))
+Detection Scaphoid of X-ray Image: 	
+3 folder :
+   
+  
+ 
+ 
+ 
+
+Classification fracture: 
+	一開始有使用ResNet-32、ResNet-50、VGG-16等模型，但效果都差強人意。
+
+Detection fracture of Scaphoid was cropped : 
+	採用的模型為rotation-yolov5，一開始使用fast-rcnn，但結果並不好。Base on yolov5 format, it define the box label is (cls, c_x, c_y, Longest side，short side, angle)
+	 
+(Tip: Range for angle is [-90，90), so wo should add 90 in angle while make your dataset label and then your label's Range should be [0,179))
+
+加入圖片旋轉 增加圖片資料集
+ 
+ 
+Discussion : 這題因為考量到後續Undo的設計，正常的使用流程會一張圖片只進行一次的結果，所以將RGB與Gray level處理後的照片分別用不同的按鈕顯示在同一個Picture Box上。
+
+1.	Python 執行另一個 Python 指令碼
+2.	https://www.delftstack.com/zh-tw/howto/python/python-run-another-python-script/#:~:text=%E7%9A%84%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%E3%80%82-,%E4%BD%BF%E7%94%A8%20import%20%E8%AA%9E%E5%8F%A5%E5%9C%A8%E5%8F%A6%E4%B8%80%E5%80%8BPython%20%E6%8C%87%E4%BB%A4%E7%A2%BC%E4%B8%AD,%E5%AE%9A%E7%BE%A9%E5%92%8C%E8%AA%9E%E5%8F%A5%E7%9A%84%E6%AA%94%E6%A1%88%E3%80%82
+3.	深度学习中的batch的大小对学习效果有何影响
+4.	https://www.zhihu.com/question/32673260
+5.	
+Conclusion : 
+這次的作業十分有趣，讓我不只學習新的語言C#，也從中徹底學習影像處理的各個功能運作流程，實際上從每個Pixel去實作，才能夠清楚知道每個Filter實際上的用途和結果，也了解不同的功能互相結合後可以得到不同的功用。雖然一開始對於新的語言相當陌生，但是一邊做一邊學習，讓我滿有成就感的。實作連通元件的題目時，有找到相關的論文，就將其實做出來，對於我未來在論文的方向和內容有一定的幫助，也對於後面的題目，老師沒有太多的限制，讓我有很大的發揮空間，自己嘗試、應用學到的許多種方法去組合、去完成目標。簡言之，感謝老師出這次的作業，讓我完整的學習從影像處理中各個方面的內容和應用。
+
